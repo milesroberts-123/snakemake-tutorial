@@ -42,6 +42,8 @@ These terms probably give you a hint that workflows can be visualized as a graph
 
 We also want to think in terms of backwards design. In other words, define what the final outcome is that you want, then figure out the steps you need to do in order to get that final outcome. We build workflows by specifying the exact output that we want. From there, the necessary input are inferred.
 
+It is also possible for a rule to have an input and no output, or an output but no input.
+
 ## What is snakemake?
 
 So with our general framework in mind, how can we write a reproducible analysis as a workflow?
@@ -82,7 +84,9 @@ Below is a description of what each directory is generally used for.
 
 Ideally, this directory should be hosted on github so that all changes are tracked and backed-up.
 
-### The components of a rule
+### The components of a rule - fundamentals
+
+Once you download this repo, open it and you should see this:
 
 ```
 rule my_rule:
@@ -91,7 +95,13 @@ rule my_rule:
 	shell: "cp {input} > {output}"
 ```
 
-### The components of a rule-revisited
+To apply this rule, we run:
+
+`snakemake --cores 1 output.txt`
+
+What's happening here? Snakemake sees the final file you want, "output.txt", then figures out the rules that need to be run in order to produce that file. In this case, it just needs to apply `my_rule` one time.
+
+### The components of a rule - advanced
 
 ```
 rule my_rule:
@@ -108,13 +118,21 @@ rule my_rule:
 	shell:
 ```
 
+### Questions you may be asking now
+
+How can I use snakemake on the HPCC?
+
 ## Final thoughts
 
 Some key lessons I've learned are:
 
 * **Do not** blindly trust workflows that people post on the internet, no matter how prestigous the author is. No matter how general a workflow was intended to be, it was written with many assumptions in mind. Many workflows assume that you're working with human/medical data, for example. Use the workflows of other people as inspiration for writing your own, or at least think critically and thoroughly test a workflow before using it.
 
-### Tips and best practices 
+* Always output more information than you need
+
+## Helpful links
+
+### Tips and best practices
 
 [Best practices](https://snakemake.readthedocs.io/en/stable/snakefiles/best_practices.html)
 
