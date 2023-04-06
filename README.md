@@ -18,7 +18,7 @@
 
 People talk a lot about reproducibility. Some argue that science is in a reproducibility crisis, while others argue that [such a crisis doesn't exist](https://doi.org/10.1073/pnas.1708272114).
 
-No matter how you feel about reproducibility, it's hard to deny that reproducible code will at least make your science easier and more productive. But what actually makes code reproducible? Some qualities of reproduciblity include:
+Many reproducibility issues stem from the analysis of data and application of code. No matter how you feel about reproducibility, it's hard to deny that reproducible code will at least make your science easier and more productive. But what actually makes code reproducible? Some qualities of reproduciblity include:
 
 * readability: code can be easily understood by humans
 
@@ -43,6 +43,8 @@ How can we achieve all of these awesome things? To start, we need an abstract ge
 ## Workflows
 
 **Workflows** are a series of functions (i.e. rules) each with defined inputs, outputs, and parameters.
+
+![alt text](images/function.png)
 
 Workflows have two more defining qualities: 
 
