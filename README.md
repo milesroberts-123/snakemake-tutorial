@@ -20,9 +20,11 @@
 
 2. [Snakemake tutorial](#snakemake-tutorial)
 
-3. [Helpful links](#helpful-links)
+3. [Where to go from here](#where-to-go-from-here)
 
-4. [Final thoughts](#final-thoughts)
+4. [Helpful links](#helpful-links)
+
+5. [Final thoughts](#final-thoughts)
 
 ## The quest for reproducibility
 
@@ -214,7 +216,7 @@ rule my_rule:
 	input:	# input files
 	output:	# output files
 	params:	# parameters
-	conda:	# conda environment
+	conda:	# conda environment, specified as a yaml file in envs/
 	envmodules:	# environment modules
 	container:	# Docker or singularity container
 	log:	# log file
@@ -225,6 +227,10 @@ rule my_rule:
 ```
 
 As you can see, you have nearly limitless flexibility in specifying the behavior of each rule.
+
+## Where to go from here
+
+Carepentries has a very helpful [Snakemake tutorial](https://carpentries-incubator.github.io/workflows-snakemake/index.html) that is much easier to understand than the official documentation, but you'll want some python experience.
 
 ## Helpful links
 
@@ -248,11 +254,13 @@ These official snakemake tutorials are rather complicated, including the ones la
 
 ### List of other skills you may want to learn
 
-* python
+W3 schools and carpentries are good places to learn more about various topics
 
-* github
+* [python](https://www.w3schools.com/python/)
 
-* conda and mamba
+* [github](https://www.w3schools.com/git/)
+
+* [conda and mamba](https://carpentries-incubator.github.io/introduction-to-conda-for-data-scientists/)
 
 * how to structre scripts (I like to use a C++ style)
 
