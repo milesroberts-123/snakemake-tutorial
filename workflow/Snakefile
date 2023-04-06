@@ -1,0 +1,4 @@
+rule my_rule:
+	input: "../config/input.txt"
+	output: "output.txt"
+	shell: "cp {input} > {output}"
