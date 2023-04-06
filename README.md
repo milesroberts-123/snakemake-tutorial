@@ -48,7 +48,7 @@ In addition, I also like to add:
 
 * parallelizability: data can be processed over an arbitrary number of cores
 
-* accessibility: data can be accessed at little cost to the user in terms of money and time
+* accessibility: data can be processed at little cost to the user in terms of money and time
 
 Can you think of other qualities reproducibile works have?
 
