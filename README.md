@@ -14,11 +14,23 @@
 
 ## Contents
 
+0. [The quest for reproducibility](#the-quest-for-reproducibility)
+
+1. [Workflows](#workflows)
+
+2. [Snakemake tutorial](#snakemake-tutorial)
+
+3. [Helpful links](#helpful-links)
+
+4. [Final thoughts](#final-thoughts)
+
 ## The quest for reproducibility
 
 People talk a lot about reproducibility. Some argue that science is in a reproducibility crisis, while others argue that [such a crisis doesn't exist](https://doi.org/10.1073/pnas.1708272114).
 
-Many reproducibility issues stem from the analysis of data and application of code. No matter how you feel about reproducibility, it's hard to deny that reproducible code will at least make your science easier and more productive. But what actually makes code reproducible? Some qualities of reproduciblity include:
+Many alleged reproducibility issues stem from the inconsistent ways scientists analyze data and write code. No matter how you feel about reproducibility, it's hard to deny that reproducible code will at least make your science easier and more productive. But what actually makes code reproducible? 
+
+Some qualities of reproduciblity include:
 
 * readability: code can be easily understood by humans
 
@@ -42,35 +54,37 @@ How can we achieve all of these awesome things? To start, we need an abstract ge
  
 ## Workflows
 
-**Workflows** are a series of functions (i.e. rules) each with defined inputs, outputs, and parameters.
+**Workflows** are a series of functions (i.e. rules) each with defined inputs, outputs, and parameters. Here's a simple visual:
 
 ![alt text](images/function.png)
 
 Workflows have two more defining qualities: 
 
-* directionality: information flows between functions in one direction
+* directional: information flows between functions in one direction
 
-* acyclic-ity: the same piece of data cannot be both the input and the output for the same function. In other words, each function must perform some modification or transformation to the data - otherwise, there's no reason to apply the function in the first place. 
+* acyclic: the same piece of data cannot be both the input and the output for the same function. In other words, each function must perform some modification or transformation to the data - otherwise, there's no reason to apply the function in the first place. 
 
 These terms probably give you a hint that workflows can be visualized as a graph, where the nodes are rules and the edges define how the outputs of one rule serve as the input to the next rule and so on.
 
 We also want to think in terms of backwards design. In other words, define what the final outcome is that you want, then figure out the steps you need to do in order to get that final outcome. We build workflows by specifying the exact output that we want. From there, the necessary input are inferred.
 
-It is also possible for a rule to have an input and no output, or an output but no input.
+Interestingly, it is possible for a rule to have an input but no output, or an output but no input. Although this sounds weird, it doesn't violate the above conditions. Usually the first and last rules in a workflow fall in these categories.
 
-## Snakemake
+## Snakemake tutorial
 
 So with our general framework in mind, how can we write a reproducible analysis as a workflow?
 
-[Snakemake](https://snakemake.github.io/) **is a python-based software for building and running workflows.**
+[Snakemake](https://snakemake.github.io/) is a python-based software for building and running workflows. There are other alternatives, but snakemake is very popular.
 
-## Finally, a snakemake tutorial
+To do the basics you don't really need python experience, but it becomes helpful later, so definitely worth picking up if you can.
 
 So you've decided that you want to use snakemake for your next project. Great! But how do you actually use it?
 
 ###  Create project directory
 
-This repo is structured as an example. Start by cloning/downloading this repo to your local computer. 
+Let's start at the beginning: creating a place on your computer to do all the work for one project.
+
+This repo is structured as an example. You could start by cloning/downloading this repo to your local computer. 
 
 If you want to make your own, it should look something like this:
 
@@ -214,7 +228,7 @@ As you can see, you have nearly limitless flexibility in specifying the behavior
 
 ## Helpful links
 
-[List of previously published workflows](https://snakemake.github.io/snakemake-workflow-catalog/)
+[List of previously published workflows](https://snakemake.github.io/snakemake-workflow-catalog/) (**See final thoughts below**)
 
 ### Tips and best practices
 
@@ -231,6 +245,16 @@ These official snakemake tutorials are rather complicated, including the ones la
 ["basic" tutorial](https://snakemake.readthedocs.io/en/stable/tutorial/basics.html)
 
 [Advanced tutorial](https://snakemake.readthedocs.io/en/stable/tutorial/advanced.html)
+
+### List of other skills you may want to learn
+
+* python
+
+* github
+
+* conda and mamba
+
+* how to structre scripts (I like to use a C++ style)
 
 ## Final thoughts
 
