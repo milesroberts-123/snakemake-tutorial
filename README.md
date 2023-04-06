@@ -1,5 +1,9 @@
 # 30 min snakemake tutorial
 
+## Prerequisites
+
+* Some command line experience
+
 ## Goals
 
 * Provide a simpler introduction to snakemake compared to the official documentation
@@ -194,7 +198,7 @@ In nearly all cases, you're gonna want to specify a more complicated workflow in
 
 ```
 rule all:
-	input: "output.txt"
+	input: "final_output.txt"
 
 include: "rules/step_one.smk"
 include: "rules/step_two.smk"
@@ -202,6 +206,8 @@ include: "rules/step_three.smk"
 ```
 
 You can then run the workflow with `snakemake --cores 1`.
+
+Here, we are again just copying the contents of an empty file multiple times, but you could instead do almost any other operation you could imagine.
 
 In this case, we don't need to specify a target file. This is because, without a specified target, snakemake assumes that the first rule in the snakefile *is* the target. This is why `all` only has an input and no output.
 
