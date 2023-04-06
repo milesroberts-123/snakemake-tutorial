@@ -32,27 +32,25 @@
 
 ## The quest for reproducibility
 
-People talk a lot about reproducibility. Some argue that science is in a reproducibility crisis, while others argue that [such a crisis doesn't exist](https://doi.org/10.1073/pnas.1708272114).
+Many alleged reproducibility issues stem from the inconsistent ways scientists analyze data and write code. But what actually makes code reproducible? 
 
-Many alleged reproducibility issues stem from the inconsistent ways scientists analyze data and write code. No matter how you feel about reproducibility, it's hard to deny that reproducible code will at least make your science easier and more productive. But what actually makes code reproducible? 
+Some qualities of reproduciblity, as defined by the Snakemake devs, include:
 
-Some qualities of reproduciblity include:
+* **readability**: code can be easily understood by humans
 
-* readability: code can be easily understood by humans
+* **portability**: code still works even when transferred to different computers
 
-* portability: code still works even when transferred between computers with different environments
+* **modularity**: functional chunks of code can be swapped between scripts
 
-* modularity: I can swap functional chunks of code between scripts
+* **transparency**: the exact values of every parameter are clearly specified
 
-* transparency: the exact values of every parameter are clearly specified
-
-* scalability: code still works even if the size of the input data changes
+* **scalability**: code still works even if the size of the input data changes
 
 In addition, I also like to add:
 
-* parallelizability: data can be processed over an arbitrary number of cores
+* **parallelizability**: data can be processed over an arbitrary number of cores
 
-* accessibility: data can be processed at little cost to the user in terms of money and time
+* **accessibility**: data can be processed at little cost to the user in terms of money and time
 
 Can you think of other qualities reproducibile works have?
 
@@ -60,11 +58,11 @@ How can we achieve all of these awesome things? To start, we need an abstract ge
  
 ## Workflows
 
-**Workflows** are a series of functions (i.e. rules) each with defined inputs, outputs, and parameters. Here's a simple visual:
+**Workflows** are a series of functions (i.e. rules) each with defined inputs, outputs, and parameters.
 
 ![alt text](images/workflow_diagram.png)
 
-Workflows have two more defining qualities: 
+Workflows have two defining qualities:
 
 * They are directional: information flows between functions in one direction
 
@@ -92,35 +90,31 @@ Let's start at the beginning: creating a place on your computer to do all the wo
 
 This repo is structured as an example. You could start by cloning/downloading this repo to your local computer. 
 
-If you want to make your own, it should look something like this:
+```
+# clone repo
+git clone https://github.com/milesroberts-123/snakemake-tutorial.git
 
+# go to workflow folder
+cd snakemake-tutorial/workflow
 ```
-project_directory/
-- config/
-- workflow/
- - Snakefile
- - rules/
- - envs/
- - scripts/
-- results/
- - yyyy-mm-dd/
-- src/
-- doc/
-- README.md
-- LICENSE.md
-```
+
+If you want to make your own, it should look something [like this](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html)
 
 The important directories to notice are:
 
-* `doc/` contains general notes that you may add to as your read papers, get ideas, etc.
-
-* `src/` contains code you need to create the structured dataset that you then input into snakemake 
-
-* `results/` contains subfolders with dates where you put analyzed data and figures that require interpretation
+* `config/` contains the initial input files for the workflow (usually a .csv of sample-level information and a .yaml file of parameter values)
 
 * `workflow/` contains all snakemake workflow components (see next sections)
 
-* `config/` contains the initial input files for the workflow (usually a csv of sample information and a yaml file of parameter values)
+* `results/` contains subfolders with dates where you put analyzed data and figures that require interpretation
+
+In addition, I like to add:
+
+* `doc/` contains general notes about the project that you may add to as your read papers, get ideas, etc.
+
+* `src/` contains code you need to create the structured dataset that goes into `config/` 
+
+* `gyd/` acts as a recycle bin - a place to put files that I want to remove but might need later if I change my mind
 
 Ideally, this directory should be hosted on github so that all changes are tracked and backed-up.
 
@@ -130,13 +124,19 @@ As of 2023-04-06, you can access a snakemake module on the MSU ICER HPCC with:
 
 `ml -* snakemake/5.26.1-Python-3.8.2`
 
-However, this is an older version of snakemake(v5.26). I recommend installing the newest version (v7.25) as a conda environment. I also added the graphviz package for helpful visualizations.
+However, this is an older version of snakemake(v5.26). I recommend installing the newest version (v7.25) as a conda environment. Adding the graphviz package for visualizations is also helpful.
 
-`conda create -n snakemake snakemake=7.25.0 graphviz=2.50.0`
+```
+# download snakemake
+conda create -n snakemake snakemake=7.25.0 graphviz=2.50.0
+
+# activate snakemake
+conda activate snakemake
+```
 
 ### The components of a rule - fundamentals
 
-Once you download this repo, open `workflow/Snakefile` and you should see this:
+Once you download this repo, open `Snakefile` and you should see something like this:
 
 ```
 rule my_rule:
@@ -145,13 +145,13 @@ rule my_rule:
         shell: "cp {input} > {output}"
 ```
 
-In this case, we have one rule `my_rule` that takes as input one file `input.txt` in our config folder, then applies `cp` shell command to produce `output.txt`.
+In this case, we have one rule `my_rule` that takes as input one file `input.txt` in our config folder, then applies `cp` shell command to copy the contents to `output.txt`.
 
 Before running snakemake, let's verify that it will behave as expected.
 
 `snakemake -n output.txt`
 
-Here `-n` means to do a dry run. This is where you see what snakemake *would* do if you executed it, without actually executing it. You should get output like this (with snakemake v7.25):
+Here `-n` means to do a "dry run". This is where you see what snakemake would do if you executed it, without actually executing it. You should get output like this (with snakemake v7.25):
 
 ```
 Building DAG of jobs...
@@ -190,7 +190,7 @@ To actually produce the target file, we use:
 
 `snakemake --cores 1 output.txt`
 
-Again, snakemake sees the final file you want, "output.txt", then figures out the rules that need to be run in order to produce that file. In this case, it just needs to apply `my_rule` one time.
+Again, snakemake sees the final file you want, `output.txt`, then figures out the rules that need to be run in order to produce that file. In this case, it just needs to apply `my_rule` one time.
 
 ### Stringing multiple rules together
 
@@ -213,9 +213,9 @@ Looks good! You can then run the workflow with `snakemake --cores 1`.
 
 Here, we are again just copying the contents of an empty file multiple times, but you could instead do almost any other operation you could imagine.
 
-In this case, we don't need to specify a target file. This is because, without a specified target, snakemake assumes that the first rule in the snakefile *is* the target. This is why `all` only has an input and no output.
+In this case, we don't need to specify a target file. This is because, without a specified target snakemake assumes that the first rule in `Snakefile` is the target. This is why `all` only has an input and no output.
 
-To break this down further, our main snakefile contains a target rule `all` whose purpose is to simply list the final output files we want. The core of the workflow is instead written as three additional rules (`step_one`; `step_two`; and `step_three`) stored in separate files. Separating out the individual rules this way makes the code easier to read. If there's a problematic bit of code, we can simply go to it's `.smk` instead of scrolling through a super long `Snakefile`.
+To break this down further, our main snakefile contains a target rule `all` whose purpose is to simply list the final output files we want. The core of the workflow is instead written as three additional rules (`step_one`, `step_two`, and `step_three`) stored in separate files. Separating out the individual rules this way makes the code easier to read. If there's a problematic bit of code, we can simply go to it's `.smk` instead of scrolling through a super long `Snakefile`.
 
 ### The components of a rule - revisited
 
