@@ -62,13 +62,13 @@ How can we achieve all of these awesome things? To start, we need an abstract ge
 
 **Workflows** are a series of functions (i.e. rules) each with defined inputs, outputs, and parameters. Here's a simple visual:
 
-![alt text](images/function.png)
+![alt text](images/workflow_diagram.png)
 
 Workflows have two more defining qualities: 
 
-* directional: information flows between functions in one direction
+* They are directional: information flows between functions in one direction
 
-* acyclic: the same piece of data cannot be both the input and the output for the same function. In other words, each function must perform some modification or transformation to the data - otherwise, there's no reason to apply the function in the first place. 
+* They are acyclic: the same piece of data cannot be both the input and the output for the same function. In other words, each function must perform some modification or transformation to the data - otherwise, there's no reason to apply the function in the first place. 
 
 These terms probably give you a hint that workflows can be visualized as a graph, where the nodes are rules and the edges define how the outputs of one rule serve as the input to the next rule and so on.
 
@@ -130,9 +130,9 @@ As of 2023-04-06, you can access a snakemake module on the MSU ICER HPCC with:
 
 `ml -* snakemake/5.26.1-Python-3.8.2`
 
-However, this is an older version of snakemake(v5.26). I recommend installing the newest version (v7.25) as a conda environment.
+However, this is an older version of snakemake(v5.26). I recommend installing the newest version (v7.25) as a conda environment. I also added the graphviz package for helpful visualizations.
 
-`conda create -n snakemake snakemake=7.25.0`
+`conda create -n snakemake snakemake=7.25.0 graphviz=2.50.0`
 
 ### The components of a rule - fundamentals
 
@@ -205,7 +205,11 @@ include: "rules/step_two.smk"
 include: "rules/step_three.smk"
 ```
 
-You can then run the workflow with `snakemake --cores 1`.
+To make sure rules are executed in the proper order, you can visualize it with `snakemake --dag | dot -Tsvg > dag.svg`. Here's what the result should look like
+
+![alt text](workflow/dag.svg)
+
+Looks good! You can then run the workflow with `snakemake --cores 1`.
 
 Here, we are again just copying the contents of an empty file multiple times, but you could instead do almost any other operation you could imagine.
 

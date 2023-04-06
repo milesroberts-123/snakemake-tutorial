@@ -1,4 +1,11 @@
-rule my_rule:
-	input: "../config/input.txt"
-	output: "output.txt"
-	shell: "cp {input} > {output}"
+rule all:
+	input: "final_output.txt"
+
+include: "rules/step_one.smk"
+include: "rules/step_two.smk"
+include: "rules/step_three.smk"
+
+#rule my_rule:
+#	input: "../config/input.txt"
+#	output: "output.txt"
+#	shell: "cp {input} > {output}"
